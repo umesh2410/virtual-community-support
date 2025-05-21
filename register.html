@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Virtual Community Support</title>
+    <style>
+        :root {
+            --primary-color: #6200EA;
+            --primary-dark: #5000c9;
+            --primary-light: #7c43ea;
+            --secondary-color: #00BFA5;
+            --text-dark: #333;
+            --text-light: #fff;
+            --background-light: #f9f9ff;
+            --background-dark: #1a1a2e;
+            --border-radius: 0.5rem;
+            --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .register-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin: 2rem 0;
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .register-header h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .register-button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .register-button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .register-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .login-link {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
+
+        .back-to-home {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .back-to-home:hover {
+            color: var(--primary-dark);
+        }
+
+        .back-to-home svg {
+            margin-right: 0.5rem;
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0;
+            }
+
+            .register-container {
+                max-width: 90%;
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+
+            .back-to-home {
+                top: 0.75rem;
+                left: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .back-to-home svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 0.5rem;
+            }
+
+            .register-container {
+                max-width: 100%;
+                padding: 1.25rem;
+                margin: 0.5rem 0;
+                border-radius: 0.25rem;
+            }
+
+            .register-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .register-header p {
+                font-size: 0.85rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.25rem;
+            }
+
+            .form-group label {
+                font-size: 0.9rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .form-group input {
+                padding: 0.7rem;
+                font-size: 0.95rem;
+            }
+
+            .register-button {
+                padding: 0.7rem;
+                font-size: 0.95rem;
+            }
+
+            .back-to-home {
+                font-size: 0.8rem;
+                top: 0.5rem;
+                left: 0.5rem;
+            }
+
+            .back-to-home svg {
+                width: 16px;
+                height: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Home
+    </a>
+
+    <div class="register-container">
+        <div class="register-header">
+            <h1>Create an Account</h1>
+            <p>Join Virtual Community Support and make a difference</p>
+        </div>
+
+        <form id="register-form">
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email address" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="register-button">Register</button>
+        </form>
+
+        <div class="register-footer">
+            <p class="login-link">Already have an account? <a href="login.html">Login here</a></p>
+        </div>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('register-form');
+
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const fullname = document.getElementById('fullname').value;
+                const email = document.getElementById('email').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+
+                // Simple validation
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+
+                console.log('Registration attempt:', { fullname, email, username, password });
+
+                // Simulate successful registration
+                alert('Registration successful! You can now log in.');
+
+                // Redirect to login page with a success parameter
+                window.location.href = 'login.html?registered=success';
+            });
+        }
+    </script>
+</body>
+</html>

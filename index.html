@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Virtual Community Support | Empowering Change Together</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6200ea;
+            --primary-light: #9d46ff;
+            --primary-dark: #0a00b6;
+            --secondary-color: #00bfa5;
+            --secondary-light: #5df2d6;
+            --secondary-dark: #008e76;
+            --text-dark: #212121;
+            --text-light: #f5f5f5;
+            --background-light: #fafafa;
+            --background-dark: #121212;
+            --success-color: #00c853;
+            --warning-color: #ffd600;
+            --error-color: #d50000;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--background-light);
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            width: 100%;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 0;
+            position: fixed; /* Changed from sticky to fixed */
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 0.125rem 0.625rem rgba(0, 0, 0, 0.2);
+            width: 100%;
+            height: 60px; /* Fixed height for consistency */
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            background-color: rgba(98, 0, 234, 0.95);
+            box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.3);
+        }
+
+        /* Add padding to the body to account for the fixed header */
+        body {
+            padding-top: 60px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 0;
+            max-width: 40%;
+        }
+
+        .logo img {
+            height: 40px;
+            width: 40px;
+            margin-right: 0.75rem;
+            object-fit: contain;
+        }
+
+        .logo h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+        }
+
+        .nav {
+            display: flex;
+            height: 100%;
+        }
+
+        .nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 1.5rem;
+            height: 100%;
+            align-items: center;
+        }
+
+        .nav li {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0 0.25rem;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav a:not(.login-btn)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--secondary-color);
+            transition: var(--transition);
+        }
+
+        .nav a:not(.login-btn):hover::after {
+            width: 100%;
+        }
+
+        .nav a:not(.login-btn):hover {
+            color: white;
+        }
+
+        .login-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-dark) !important;
+            padding: 0.5rem 1.25rem !important;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: auto !important;
+            margin-left: 0.5rem;
+        }
+
+        .login-btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-0.1rem);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* User welcome and logout styles */
+        .user-welcome {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .welcome-text {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-dark) !important;
+            padding: 0.4rem 1rem !important;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 600;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: auto !important;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--secondary-light);
+            transform: translateY(-0.1rem);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            visibility: hidden; /* Hide the hamburger icon */
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .hero-section {
+            background: url('images/hero-bg.svg');
+            background-size: cover;
+            background-position: center;
+            height: 80vh;
+            min-height: 30rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(98, 0, 234, 0.8), rgba(0, 191, 165, 0.8));
+        }
+
+        .hero-content {
+            max-width: 80%;
+            width: 50rem;
+            padding: 0 5%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 1.875rem;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            color: var(--text-light);
+            text-decoration: none;
+            border: 0.125rem solid var(--text-light);
+            border-radius: var(--border-radius);
+            font-weight: 500;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.0625em;
+            font-size: 0.9rem;
+        }
+
+        .btn.primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--text-dark);
+        }
+
+        .btn:hover {
+            background-color: var(--text-light);
+            color: var(--primary-color);
+            transform: translateY(-0.1875rem);
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+        }
+
+        .btn.primary:hover {
+            background-color: var(--secondary-light);
+            border-color: var(--secondary-light);
+            color: var(--text-dark);
+        }
+
+        section {
+            padding: 3rem 1rem;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4rem;
+            height: 0.2rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 0.125rem;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3.75rem;
+            align-items: center;
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 18.75rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.25rem;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            line-height: 1.8;
+        }
+
+        .about-stats {
+            flex: 1;
+            min-width: 18.75rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1.875rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.875rem;
+            background-color: white;
+            border-radius: var(--border-radius);
+            min-width: 11.25rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            border-bottom: 0.25rem solid var(--primary-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-0.625rem);
+            box-shadow: 0 0.625rem 1.875rem rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.625rem;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 0;
+            flex: 1;
+            min-width: 16rem;
+            max-width: 22rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-top: 0.25rem solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-0.625rem);
+            box-shadow: 0 0.9375rem 1.875rem rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .cards-container {
+                gap: 2rem;
+            }
+        }
+
+        /* Events Section Styles */
+        .events-section {
+            background-color: #f5f8ff;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .events-section .section-header h2 {
+            color: var(--primary-color);
+        }
+
+        .events-section .cards-container {
+            margin-top: 2rem;
+            gap: 1.5rem;
+        }
+        .events-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.08);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .events-filter-title {
+            width: 100%;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 12rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background-color: #f9f9f9;
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+            background-color: white;
+        }
+
+        .filter-group.search {
+            position: relative;
+            flex: 2;
+        }
+
+        .search-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background-color: #f9f9f9;
+            transition: var(--transition);
+        }
+
+        .search-input-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+            background-color: white;
+        }
+
+        #event-search {
+            border: none;
+            padding: 0.75rem 1rem;
+            padding-right: 3rem;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        #event-search:focus {
+            outline: none;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 3rem;
+            background-color: var(--primary-color);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .search-btn svg {
+            stroke: white;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .events-filter {
+                padding: 1rem;
+            }
+
+            .filter-group {
+                min-width: 100%;
+            }
+        }
+
+        .event-card {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            height: 100%;
+            border-top: none;
+            box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card:hover {
+            transform: translateY(-0.5rem);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+        }
+
+        .event-date {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            min-width: 3.5rem;
+            z-index: 1;
+            box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.2);
+        }
+
+        .event-date .day {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-date .month {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-top: 0.25rem;
+        }
+
+        .event-card .card-img-container {
+            position: relative;
+            height: 10rem;
+            overflow: hidden;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+        }
+
+        .event-card .card-img-container svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+            stroke: white;
+        }
+
+        .event-card .card-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        .event-details {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+        }
+
+        .event-details h3 {
+            margin: 0 0 0.75rem;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .event-meta {
+            margin: 0.5rem 0 1rem;
+            font-size: 0.9rem;
+            background-color: var(--background-light);
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+        }
+
+        .event-meta p {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .event-meta p:last-child {
+            margin-bottom: 0;
+        }
+
+        .event-meta .icon {
+            margin-right: 0.75rem;
+            stroke: var(--primary-color);
+            min-width: 1rem;
+        }
+
+        .event-details p {
+            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-dark);
+        }
+
+        .register-btn {
+            margin-top: auto;
+            align-self: center;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: var(--transition);
+        }
+
+        .register-btn:hover {
+            background-color: var(--primary-dark);
+            color: white;
+            transform: translateY(-0.25rem);
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            overflow: auto;
+            padding: 0;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 2rem;
+            width: 90%;
+            max-width: 31.25rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-2rem); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .close-modal:hover {
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            background-color: #6200EA; /* Specific purple color from your example */
+            border-bottom: none;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+
+
+        .full-width {
+            width: 100%;
+            padding: 0.75rem !important;
+            font-size: 1rem !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 1rem;
+        }
+
+        .text-center {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
+
+        .register-link {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .register-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin: 1.25rem 1.25rem 0.75rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .card p {
+            margin: 0 1.25rem 1rem;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .card-img {
+            width: 100%;
+            height: 9.375rem;
+            object-fit: cover;
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            margin-bottom: 0;
+        }
+
+        .opportunity-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+        }
+
+        .opportunity-card .card-header {
+            position: relative;
+            height: 8rem;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-dark));
+            border-top-left-radius: var(--border-radius);
+            border-top-right-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .opportunity-card .card-header svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.2;
+        }
+
+        .opportunity-card .card-header h3 {
+            color: white;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .opportunity-details {
+            margin: 0 1.25rem 1rem;
+            font-size: 0.9rem;
+            background-color: var(--background-light);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+        }
+
+        .opportunity-details div {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .opportunity-details div strong {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            min-width: 4.5rem;
+        }
+
+        .opportunity-details div:last-child {
+            margin-bottom: 0;
+        }
+
+        .opportunity-card .btn {
+            margin: 0 1.25rem 1.25rem;
+            text-align: center;
+            font-weight: 600;
+            width: calc(100% - 2.5rem);
+            align-self: center;
+            display: block;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+        }
+
+        .opportunity-card .btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .opportunity-card .btn:hover {
+            transform: translateY(-0.25rem);
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.15);
+        }
+
+        .opportunity-card .btn.primary:hover {
+            background-color: var(--primary-dark);
+            color: white;
+        }
+
+        .opportunities-section {
+            background-color: #f9f9ff;
+            padding-top: 4rem;
+            padding-bottom: 4rem;
+        }
+
+        .opportunities-section .section-header h2 {
+            color: var(--primary-color);
+        }
+
+        .opportunities-section .cards-container {
+            margin-top: 2rem;
+            gap: 1.5rem;
+        }
+
+        .view-all-link {
+            text-align: center;
+            margin-top: 3.125rem;
+        }
+
+        .view-all-link .btn {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+        }
+
+        .view-all-link .btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .view-all-link .btn:hover {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            transform: translateY(-0.25rem);
+        }
+
+        .view-all-link .btn.primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .contact-form {
+            max-width: 80%;
+            width: 43.75rem;
+            margin: 0 auto;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5625rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(98, 0, 234, 0.1);
+        }
+
+        .footer {
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            padding: 3.75rem 5% 1.25rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3.75rem;
+            max-width: 87.5rem;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            flex: 1;
+            min-width: 15.625rem;
+        }
+
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.9375rem;
+            color: var(--secondary-color);
+        }
+
+        .footer-logo p {
+            color: #bbb;
+            margin-bottom: 1.25rem;
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 12.5rem;
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            margin-bottom: 1.25rem;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            position: relative;
+            padding-bottom: 0.625rem;
+        }
+
+        .footer-links h4::after,
+        .footer-contact h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 2.5rem;
+            height: 0.1875rem;
+            background-color: var(--secondary-color);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary-color);
+            transform: translateX(0.3125rem);
+        }
+
+        .footer-contact {
+            flex: 1;
+            min-width: 15.625rem;
+        }
+
+        .footer-contact p {
+            color: #bbb;
+            margin-bottom: 0.625rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3.75rem;
+            padding-top: 1.25rem;
+            border-top: 0.0625rem solid rgba(255,255,255,0.1);
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 62rem) { /* 992px */
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .section-header h2 {
+                font-size: 2.2rem;
+            }
+
+            .stat-card {
+                min-width: 9.375rem;
+                padding: 1.25rem;
+            }
+        }
+
+        /* Mobile menu styles */
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                height: 50px;
+            }
+
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 1rem;
+            }
+
+            .logo {
+                max-width: 50%;
+            }
+
+            .logo h1 {
+                font-size: 1rem;
+            }
+
+            .logo img {
+                height: 30px;
+                width: 30px;
+                margin-right: 0.5rem;
+            }
+
+            .mobile-menu-btn {
+                display: none; /* Hide the hamburger icon as requested */
+                font-size: 1.8rem;
+                cursor: pointer;
+                transition: var(--transition);
+            }
+
+            .nav {
+                position: relative;
+                top: auto;
+                left: auto;
+                width: 50%;
+                background-color: transparent;
+                padding: 0;
+                max-height: none;
+                overflow: visible;
+                box-shadow: none;
+                margin-left: 0;
+                height: 50px;
+            }
+
+            .nav ul {
+                flex-wrap: nowrap;
+                justify-content: flex-end;
+                gap: 0.75rem;
+                height: 50px;
+            }
+
+            .nav li {
+                margin-left: 0;
+                width: auto;
+                text-align: center;
+                height: 50px;
+            }
+
+            .nav a {
+                height: 50px;
+                padding: 0 0.2rem;
+                font-size: 0.85rem;
+            }
+
+            .nav a:not(.login-btn)::after {
+                height: 2px;
+            }
+
+            .login-btn {
+                padding: 0.3rem 0.75rem !important;
+                font-size: 0.85rem;
+                margin-left: 0.25rem;
+            }
+
+            .user-welcome {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .welcome-text {
+                font-size: 0.8rem;
+            }
+
+            .logout-btn {
+                padding: 0.3rem 0.75rem !important;
+                font-size: 0.8rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.3rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 0.9375rem;
+            }
+
+            .about-content {
+                gap: 2.5rem;
+            }
+
+            .stat-card {
+                width: 100%;
+            }
+
+            .card {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 36rem) { /* 576px */
+            .header {
+                height: 45px;
+            }
+
+            .header-content {
+                padding: 0 0.75rem;
+            }
+
+            .logo {
+                max-width: 45%;
+            }
+
+            .logo h1 {
+                font-size: 0.85rem;
+            }
+
+            .logo img {
+                height: 25px;
+                width: 25px;
+                margin-right: 0.4rem;
+            }
+
+            .nav {
+                width: 55%;
+                height: 45px;
+            }
+
+            .nav ul {
+                gap: 0.5rem;
+                height: 45px;
+            }
+
+            .nav a {
+                height: 45px;
+                padding: 0 0.15rem;
+                font-size: 0.8rem;
+            }
+
+            .login-btn {
+                padding: 0.25rem 0.5rem !important;
+                font-size: 0.8rem;
+            }
+
+            .welcome-text {
+                font-size: 0.75rem;
+            }
+
+            .logout-btn {
+                padding: 0.25rem 0.5rem !important;
+                font-size: 0.75rem;
+            }
+
+            .hero-section {
+                height: 70vh;
+                min-height: 25rem;
+            }
+
+            .hero-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+            }
+
+            section {
+                padding: 2rem 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .contact-form {
+                padding: 1rem;
+                max-width: 95%;
+            }
+        }
+
+        /* Extra small devices */
+        @media (max-width: 20rem) { /* 320px */
+            .header {
+                height: 40px;
+            }
+
+            .logo {
+                max-width: 40%;
+            }
+
+            .logo h1 {
+                font-size: 0.75rem;
+            }
+
+            .logo img {
+                height: 22px;
+                width: 22px;
+                margin-right: 0.3rem;
+            }
+
+            .nav {
+                width: 60%;
+                height: 40px;
+            }
+
+            .nav ul {
+                gap: 0.3rem;
+                height: 40px;
+            }
+
+            .nav a {
+                height: 40px;
+                padding: 0 0.1rem;
+                font-size: 0.7rem;
+            }
+
+            .login-btn {
+                padding: 0.2rem 0.4rem !important;
+                font-size: 0.7rem;
+                margin-left: 0.1rem;
+            }
+        }
+
+        /* Simple login form styling */
+        #login-form .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+            font-size: 0.95rem;
+        }
+
+        #login-form .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        #login-form .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.1);
+        }
+
+        #login-form .form-group input::placeholder {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Login button */
+        #login-form .btn.primary.full-width {
+            background-color: var(--primary-color);
+            border: none;
+            color: white;
+            font-weight: 600;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #login-form .btn.primary.full-width:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <h1>Virtual Community Support</h1>
+                </div>
+                <nav class="nav">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li id="auth-button-container"><a href="login.html" class="btn login-btn">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <section id="home" class="hero-section">
+                <div class="hero-content">
+                    <h1>Virtual Community Support</h1>
+                    <p>Motivating and enabling employees to effectively serve community needs through employer leadership</p>
+                    <div class="hero-buttons">
+                        <a href="#events" class="btn primary">Join an Event</a>
+                        <a href="#contact" class="btn">Get Involved</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about-section">
+                <div class="section-header">
+                    <h2>Virtual community support</h2>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>At <strong> Virtual Community Support</strong>, we're dedicated to providing exceptional services and programs that make a real difference in our community. We believe in the power of compassion, excellence, and dedication to create meaningful change.</p>
+                        <p>Our organization offers a wide range of services designed to support individuals and families in need. We work tirelessly to ensure that everyone has access to the resources and assistance they require to thrive.</p>
+                        <p>Join us in our mission - together we can build a stronger, more supportive community for all!</p>
+                    </div>
+                    <div class="about-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">750+</div>
+                            <div class="stat-label">Clients Served</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">65+</div>
+                            <div class="stat-label">Services Offered</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">15K+</div>
+                            <div class="stat-label">Support Hours</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="events" class="events-section">
+                <div class="section-header">
+                    <h2>Upcoming Community Events</h2>
+                </div>
+
+                <div class="events-filter">
+                    <div class="events-filter-title">Find Events</div>
+                    <div class="filter-group">
+                        <label for="event-date">Date</label>
+                        <select id="event-date" name="event-date">
+                            <option value="all">All Dates</option>
+                            <option value="this-week">This Week</option>
+                            <option value="this-month">This Month</option>
+                            <option value="next-month">Next Month</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="event-location">Location</label>
+                        <select id="event-location" name="event-location">
+                            <option value="all">All Locations</option>
+                            <option value="downtown">Downtown</option>
+                            <option value="north">North Side</option>
+                            <option value="south">South Side</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="event-type">Type</label>
+                        <select id="event-type" name="event-type">
+                            <option value="all">All Types</option>
+                            <option value="blood-donation">Blood Donation</option>
+                            <option value="tree-plantation">Tree Plantation</option>
+                            <option value="food-drive">Food Drive</option>
+                        </select>
+                    </div>
+                    <div class="filter-group search">
+                        <label for="event-search">Search Events</label>
+                        <div class="search-input-container">
+                            <input type="text" id="event-search" name="event-search" placeholder="Search upcoming events...">
+                            <button type="button" class="search-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cards-container">
+                    <div class="card event-card">
+                        <div class="event-date">
+                            <span class="day">15</span>
+                            <span class="month">JUN</span>
+                        </div>
+                        <div class="card-img-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M19 6l-7 12-7-12m16 6H3"></path>
+                            </svg>
+                            <img src="images/education.svg" alt="Community Blood Drive" class="card-img">
+                        </div>
+                        <div class="event-details">
+                            <h3>Community Blood Drive</h3>
+                            <div class="event-meta">
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Downtown Community Center
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    9:00 AM - 2:00 PM
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    25/50 Registered
+                                </p>
+                            </div>
+                            <p>Join us for our quarterly blood donation drive. Your donation can save up to 3 lives!</p>
+                            <a href="login.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+
+                    <div class="card event-card">
+                        <div class="event-date">
+                            <span class="day">22</span>
+                            <span class="month">JUN</span>
+                        </div>
+                        <div class="card-img-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+                            </svg>
+                            <img src="images/environment.svg" alt="City Park Cleanup" class="card-img">
+                        </div>
+                        <div class="event-details">
+                            <h3>City Park Cleanup</h3>
+                            <div class="event-meta">
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    Riverside Park
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    8:00 AM - 12:00 PM
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    18/30 Registered
+                                </p>
+                            </div>
+                            <p>Help us clean up and beautify our city's largest park. Equipment and refreshments provided.</p>
+                            <a href="login.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+
+                    <div class="card event-card">
+                        <div class="event-date">
+                            <span class="day">29</span>
+                            <span class="month">JUN</span>
+                        </div>
+                        <div class="card-img-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 11h16a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1zm0 0v8a1 1 0 001 1h14a1 1 0 001-1v-8M12 11v8m-5-4h10"></path>
+                            </svg>
+                            <img src="images/food.svg" alt="Food Bank Volunteer Day" class="card-img">
+                        </div>
+                        <div class="event-details">
+                            <h3>Food Bank Volunteer Day</h3>
+                            <div class="event-meta">
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    City Food Bank
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    10:00 AM - 3:00 PM
+                                </p>
+                                <p>
+                                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="9" cy="7" r="4"></circle>
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                    </svg>
+                                    12/20 Registered
+                                </p>
+                            </div>
+                            <p>Help sort and package food donations that will feed hundreds of families in our community.</p>
+                            <a href="login.html" class="btn register-btn">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="view-all-link">
+                    <a href="#events" class="btn primary">View All Events</a>
+                </div>
+            </section>
+
+            <section id="opportunities" class="opportunities-section">
+                <div class="section-header">
+                    <h2>Volunteer Opportunities</h2>
+                </div>
+
+                <div class="cards-container">
+                    <div class="card opportunity-card">
+                        <div class="card-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <h3>Weekend Tutoring Program</h3>
+                        </div>
+                        <p>Help students with homework, exam preparation, and developing study skills. Make a direct impact on a student's educational journey.</p>
+                        <div class="opportunity-details">
+                            <div>
+                                <strong>When:</strong>
+                                <span>Every Saturday, 10am-12pm</span>
+                            </div>
+                            <div>
+                                <strong>Location:</strong>
+                                <span>Community Centers</span>
+                            </div>
+                            <div>
+                                <strong>Slots:</strong>
+                                <span>5 positions available</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="btn primary">Apply Now</a>
+                    </div>
+
+                    <div class="card opportunity-card">
+                        <div class="card-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path>
+                            </svg>
+                            <h3>Community Park Cleanup</h3>
+                        </div>
+                        <p>Join our team to clean up local parks, plant trees, and create beautiful green spaces for everyone to enjoy.</p>
+                        <div class="opportunity-details">
+                            <div>
+                                <strong>When:</strong>
+                                <span>First Sunday of each month, 9am-12pm</span>
+                            </div>
+                            <div>
+                                <strong>Location:</strong>
+                                <span>Various Parks</span>
+                            </div>
+                            <div>
+                                <strong>Slots:</strong>
+                                <span>12 positions available</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="btn primary">Apply Now</a>
+                    </div>
+
+                    <div class="card opportunity-card">
+                        <div class="card-header">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 11h16a1 1 0 001-1V8a1 1 0 00-1-1H4a1 1 0 00-1 1v2a1 1 0 001 1zm0 0v8a1 1 0 001 1h14a1 1 0 001-1v-8M12 11v8m-5-4h10"></path>
+                            </svg>
+                            <h3>Food Bank Volunteer</h3>
+                        </div>
+                        <p>Help sort, package, and distribute food to those in need. Your time makes a direct impact on food security in our community.</p>
+                        <div class="opportunity-details">
+                            <div>
+                                <strong>When:</strong>
+                                <span>Weekdays, flexible hours</span>
+                            </div>
+                            <div>
+                                <strong>Location:</strong>
+                                <span>Local Food Banks</span>
+                            </div>
+                            <div>
+                                <strong>Slots:</strong>
+                                <span>8 positions available</span>
+                            </div>
+                        </div>
+                        <a href="#contact" class="btn primary">Apply Now</a>
+                    </div>
+                </div>
+
+                <div class="view-all-link">
+                    <a href="#contact" class="btn primary">See All Opportunities</a>
+                </div>
+            </section>
+
+            <section id="contact" class="contact-section">
+                <div class="section-header">
+                    <h2>Get Involved Today</h2>
+                </div>
+
+                <div class="contact-form">
+                    <form id="involvement-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number (Optional)</label>
+                            <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890">
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">Area of Interest</label>
+                            <select id="interest" name="interest" required>
+                                <option value="">Select an option</option>
+                                <option value="education">Education Support</option>
+                                <option value="environment">Environmental Conservation</option>
+                                <option value="food">Food Security</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="5" placeholder="Tell us how you'd like to get involved..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn primary">Submit Application</button>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>Virtual Community Support</h3>
+                    <p>Motivating and enabling employees to effectively serve community needs through employer leadership and organized initiatives.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#events">Events</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li id="footer-auth-link"><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>Email: support@virtualcommunity.org</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Address: 123 Community Ave, Suite 200<br>Anytown, ST 12345</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Virtual Community Support. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+
+
+    <script>
+        // Check login status and update navigation
+        function checkLoginStatus() {
+            const authButtonContainer = document.getElementById('auth-button-container');
+            const footerAuthLink = document.getElementById('footer-auth-link');
+            const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+            const username = localStorage.getItem('username');
+
+            if (isLoggedIn && username) {
+                // User is logged in, show profile/logout button
+                authButtonContainer.innerHTML = `
+                    <div class="user-welcome">
+                        <span class="welcome-text">Welcome, ${username}</span>
+                        <a href="#" id="logout-btn" class="btn logout-btn">Logout</a>
+                    </div>
+                `;
+
+                // Update footer link
+                if (footerAuthLink) {
+                    footerAuthLink.innerHTML = '<a href="#" id="footer-logout-btn">Logout</a>';
+                }
+
+                // Add logout functionality to header button
+                document.getElementById('logout-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Clear user data from localStorage
+                    localStorage.removeItem('userLoggedIn');
+                    localStorage.removeItem('username');
+
+                    // Reload the page
+                    window.location.reload();
+                });
+
+                // Add logout functionality to footer button
+                const footerLogoutBtn = document.getElementById('footer-logout-btn');
+                if (footerLogoutBtn) {
+                    footerLogoutBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+
+                        // Clear user data from localStorage
+                        localStorage.removeItem('userLoggedIn');
+                        localStorage.removeItem('username');
+
+                        // Reload the page
+                        window.location.reload();
+                    });
+                }
+            } else {
+                // User is not logged in, show login button
+                authButtonContainer.innerHTML = '<a href="login.html" class="btn login-btn">Login</a>';
+
+                // Update footer link
+                if (footerAuthLink) {
+                    footerAuthLink.innerHTML = '<a href="login.html">Login</a>';
+                }
+            }
+        }
+
+        // Run on page load
+        checkLoginStatus();
+
+        // Mobile menu toggle removed as requested
+        const nav = document.querySelector('.nav');
+        const header = document.querySelector('.header');
+
+        // Add scrolled class to header when scrolling down
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Mobile menu code removed as requested
+                }
+            });
+        });
+
+        // Form submission handling
+        const form = document.getElementById('involvement-form');
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // In a real application, you would send the form data to a server
+                // For this demo, we'll just show a success message
+
+                const formData = new FormData(form);
+                let formValues = {};
+
+                for (let [key, value] of formData.entries()) {
+                    formValues[key] = value;
+                }
+
+                console.log('Form submitted:', formValues);
+
+                // Show success message
+                form.innerHTML = `
+                    <div style="text-align: center; padding: 1.875rem;">
+                        <h3 style="color: var(--success-color); margin-bottom: 1.25rem;">Thank You for Your Interest!</h3>
+                        <p>We've received your application and will contact you soon about the next steps.</p>
+                        <p style="margin-top: 1.25rem;">Reference #: ${Math.floor(Math.random() * 1000000)}</p>
+                    </div>
+                `;
+            });
+        }
+
+
+    </script>
+</body>
+</html>
